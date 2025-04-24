@@ -45,25 +45,6 @@ p {
     font-size: 3vmin; /* Scales with viewport */
 }
 
-.next-button {
-    position: relative;
-    z-index: 3;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border: 2px solid black;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 2.5vmin;
-    color: black;
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.next-button:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-}
-
 .music-button {
     position: fixed;
     bottom: 20px;
@@ -158,15 +139,18 @@ p {
         font-size: 2vmin; /* Slightly smaller for mobile */
     }
 
-    .next-button {
-        font-size: 2vmin;
-    }
-
-    /* Ensure content doesn't overflow on mobile */
+    /* Truncate text on mobile to show only first 4 characters + ellipsis */
     .content h1,
     .content p {
         max-width: 90%; /* Prevent overflow */
         overflow: hidden;
         text-overflow: ellipsis;
+        display: inline-block; /* Needed for ellipsis to work */
+    }
+
+    /* Ensure the text is truncated to 4 characters + ellipsis */
+    .content h1::after,
+    .content p::after {
+        content: "...";
     }
 }

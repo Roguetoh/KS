@@ -7,7 +7,6 @@
     <link rel="icon" type="image/x-icon" href="src\icon.png">
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <div id="firstScreen" class="screen">
         <canvas id="stars"></canvas>
@@ -17,21 +16,19 @@
         </div>
         <div id="clickPrompt" class="click-prompt">Click anywhere to continue</div>
     </div>
-
     <div id="secondScreen" class="screen hidden">
         <canvas id="starsSecond"></canvas>
         <div class="content">
             <h1>快来开启你的星空之旅吧！</h1>
             <p>Let's begin your starry journey!</p>
-            <button id="nextButton" class="next-button">Next</button>
         </div>
+        <div id="clickPromptSecond" class="click-prompt">Click anywhere to continue</div>
         <button id="backButton" class="back-button">
             <svg class="back-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 18L9 12L15 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </button>
     </div>
-
     <div id="thirdScreen" class="screen hidden">
         <canvas id="starsThird"></canvas>
         <button id="backButtonThird" class="back-button">
@@ -40,7 +37,6 @@
             </svg>
         </button>
     </div>
-
     <button id="musicToggle" class="music-button">
         <svg id="speakerIcon" class="music-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 3.5V20.5L4 17V7L12 3.5Z" fill="black" stroke="black" stroke-width="1.5" stroke-linejoin="round"/>
@@ -53,12 +49,10 @@
             <path d="M20 7L16 17" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
     </button>
-
     <audio id="backgroundMusic" loop autoplay>
         <source src="src\BGM.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    
     <script src="script.js"></script>
 </body>
 </html>

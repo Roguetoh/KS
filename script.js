@@ -13,8 +13,8 @@ const secondScreen = document.getElementById('secondScreen');
 const thirdScreen = document.getElementById('thirdScreen');
 const backButton = document.getElementById('backButton');
 const backButtonThird = document.getElementById('backButtonThird');
-const nextButton = document.getElementById('nextButton');
 const clickPrompt = document.getElementById('clickPrompt');
+const clickPromptSecond = document.getElementById('clickPromptSecond');
 
 // Set canvas size to match window
 function resizeCanvas() {
@@ -98,13 +98,20 @@ musicToggle.addEventListener('click', () => {
     }
 });
 
-// Screen transition functionality (First to Second)
+// Screen transition functionality (First to Second, Second to Third)
 document.addEventListener('click', (event) => {
-    // Prevent clicks on buttons or prompt from triggering the transition
-    if (event.target.closest('#backButton') || event.target.closest('#musicToggle') || event.target.closest('#clickPrompt') || event.target.closest('#nextButton')) return;
+    // Prevent clicks on buttons or prompts from triggering the transition
+    if (event.target.closest('#backButton') || event.target.closest('#backButtonThird') || event.target.closest('#musicToggle') || event.target.closest('#clickPrompt') || event.target.closest('#clickPromptSecond')) return;
+    
+    // First to Second
     if (!firstScreen.classList.contains('hidden')) {
         firstScreen.classList.add('hidden');
         secondScreen.classList.remove('hidden');
+    }
+    // Second to Third
+    else if (!secondScreen.classList.contains('hidden')) {
+        secondScreen.classList.add('hidden');
+        thirdScreen.classList.remove('hidden');
     }
 });
 
@@ -112,12 +119,6 @@ document.addEventListener('click', (event) => {
 backButton.addEventListener('click', () => {
     secondScreen.classList.add('hidden');
     firstScreen.classList.remove('hidden');
-});
-
-// Next button functionality (Second to Third)
-nextButton.addEventListener('click', () => {
-    secondScreen.classList.add('hidden');
-    thirdScreen.classList.remove('hidden');
 });
 
 // Back button functionality (Third to Second)
