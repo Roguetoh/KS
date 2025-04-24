@@ -100,8 +100,8 @@ musicToggle.addEventListener('click', () => {
 
 // Screen transition functionality (First to Second, Second to Third)
 document.addEventListener('click', (event) => {
-    // Prevent clicks on buttons or prompts from triggering the transition
-    if (event.target.closest('#backButton') || event.target.closest('#backButtonThird') || event.target.closest('#musicToggle') || event.target.closest('#clickPrompt') || event.target.closest('#clickPromptSecond')) return;
+    // Prevent clicks on buttons from triggering the transition
+    if (event.target.closest('#backButton') || event.target.closest('#backButtonThird') || event.target.closest('#musicToggle')) return;
     
     // First to Second
     if (!firstScreen.classList.contains('hidden')) {

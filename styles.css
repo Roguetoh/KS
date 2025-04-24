@@ -28,6 +28,7 @@ canvas {
     top: 0;
     left: 0;
     z-index: 1;
+    pointer-events: none; /* Prevent canvas from intercepting clicks */
 }
 
 .content {
@@ -112,6 +113,7 @@ p {
     font-size: 2.5vmin; /* Scales with viewport */
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     animation: flicker 1.5s infinite;
+    pointer-events: none; /* Prevent click-prompt from intercepting clicks */
 }
 
 @keyframes flicker {
