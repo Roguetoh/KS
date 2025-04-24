@@ -129,30 +129,21 @@ p {
 @media (max-width: 768px) {
     h1 {
         font-size: 5vmin; /* Slightly smaller for mobile */
-        white-space: nowrap; /* Prevent text wrapping */
+        white-space: normal; /* Allow text wrapping */
     }
 
     p {
         font-size: 2.5vmin; /* Slightly smaller for mobile */
-        white-space: nowrap; /* Prevent text wrapping */
+        white-space: normal; /* Allow text wrapping */
     }
 
     .click-prompt {
         font-size: 2vmin; /* Slightly smaller for mobile */
     }
 
-    /* Truncate text on mobile to show only first 4 characters + ellipsis */
+    /* Ensure content fits within the screen */
     .content h1,
     .content p {
         max-width: 90%; /* Prevent overflow */
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: inline-block; /* Needed for ellipsis to work */
-    }
-
-    /* Ensure the text is truncated to 4 characters + ellipsis */
-    .content h1::after,
-    .content p::after {
-        content: "...";
     }
 }
