@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background-color: #f4c2c2; /* Hot pink background */
+    background-color: #f4c2c2;
     overflow: hidden;
     height: 100vh;
     color: black;
@@ -43,6 +43,25 @@ h1 {
 
 p {
     font-size: 3vmin; /* Scales with viewport */
+}
+
+.next-button {
+    position: relative;
+    z-index: 3;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid black;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 2.5vmin;
+    color: black;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.next-button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 .music-button {
@@ -137,6 +156,10 @@ p {
 
     .click-prompt {
         font-size: 2vmin; /* Slightly smaller for mobile */
+    }
+
+    .next-button {
+        font-size: 2vmin;
     }
 
     /* Ensure content doesn't overflow on mobile */
