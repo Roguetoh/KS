@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background-color: #f4c2c2;
+    background-color: #f4c2c2; /* Hot pink background */
     overflow: hidden;
     height: 100vh;
     color: black;
@@ -37,12 +37,12 @@ canvas {
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 6vmin; /* Scales with viewport */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 p {
-    font-size: 1.5rem;
+    font-size: 3vmin; /* Scales with viewport */
 }
 
 .music-button {
@@ -109,7 +109,7 @@ p {
     left: 50%;
     transform: translateX(-50%);
     z-index: 3;
-    font-size: 1.2rem;
+    font-size: 2.5vmin; /* Scales with viewport */
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     animation: flicker 1.5s infinite;
 }
@@ -120,5 +120,20 @@ p {
     }
     50% {
         opacity: 0.3;
+    }
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 5vmin; /* Slightly smaller for mobile */
+    }
+
+    p {
+        font-size: 2.5vmin; /* Slightly smaller for mobile */
+    }
+
+    .click-prompt {
+        font-size: 2vmin; /* Slightly smaller for mobile */
     }
 }
