@@ -4,7 +4,7 @@ body {
     overflow: hidden;
     height: 100vh;
     color: black;
-    font-family: Arial, sans-serif;
+    font-family: 'Noto Sans SC', Arial, sans-serif; /* Use Noto Sans SC for Chinese characters */
 }
 
 .screen {
@@ -130,11 +130,15 @@ p {
     h1 {
         font-size: 5vmin; /* Slightly smaller for mobile */
         white-space: normal; /* Allow text wrapping */
+        word-break: normal; /* Ensure normal word breaking */
+        overflow-wrap: break-word; /* Allow breaking within words if necessary */
     }
 
     p {
         font-size: 2.5vmin; /* Slightly smaller for mobile */
         white-space: normal; /* Allow text wrapping */
+        word-break: normal; /* Ensure normal word breaking */
+        overflow-wrap: break-word; /* Allow breaking within words if necessary */
     }
 
     .click-prompt {
