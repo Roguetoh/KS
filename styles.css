@@ -130,14 +130,14 @@ p {
     h1 {
         font-size: 5vmin; /* Slightly smaller for mobile */
         white-space: normal; /* Allow text wrapping */
-        word-break: normal; /* Ensure normal word breaking */
+        word-break: keep-all; /* Prevent breaking within Chinese text */
         overflow-wrap: break-word; /* Allow breaking within words if necessary */
     }
 
     p {
         font-size: 2.5vmin; /* Slightly smaller for mobile */
         white-space: normal; /* Allow text wrapping */
-        word-break: normal; /* Ensure normal word breaking */
+        word-break: break-word; /* Allow English text to break at word boundaries */
         overflow-wrap: break-word; /* Allow breaking within words if necessary */
     }
 
