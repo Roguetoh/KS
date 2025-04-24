@@ -127,13 +127,23 @@ p {
 @media (max-width: 768px) {
     h1 {
         font-size: 5vmin; /* Slightly smaller for mobile */
+        white-space: nowrap; /* Prevent text wrapping */
     }
 
     p {
         font-size: 2.5vmin; /* Slightly smaller for mobile */
+        white-space: nowrap; /* Prevent text wrapping */
     }
 
     .click-prompt {
         font-size: 2vmin; /* Slightly smaller for mobile */
+    }
+
+    /* Ensure content doesn't overflow on mobile */
+    .content h1,
+    .content p {
+        max-width: 90%; /* Prevent overflow */
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
