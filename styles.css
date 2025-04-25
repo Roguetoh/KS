@@ -58,6 +58,13 @@ p {
     touch-action: manipulation; /* Improve touch interaction */
 }
 
+#countdown {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
 .choice-btn {
     transition: transform 0.2s;
 }
@@ -181,5 +188,9 @@ p {
         max-width: 90%; /* Adjust for smaller screens */
         padding: 0.5rem;
         margin: 0.5rem;
+    }
+
+    #countdown {
+        font-size: 1.2rem; /* Slightly smaller for mobile */
     }
 }

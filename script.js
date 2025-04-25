@@ -21,11 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const backButtonRomance = document.getElementById('backButtonRomance');
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
+    const countdownDiv = document.getElementById('countdown');
     const clickPrompt = document.getElementById('clickPrompt');
     const clickPromptSecond = document.getElementById('clickPromptSecond');
 
     // Check if critical elements exist
-    if (!canvas || !ctx || !canvasSecond || !ctxSecond || !canvasPrompt || !ctxPrompt || !canvasRomance || !ctxRomance || !firstScreen || !secondScreen || !promptScreen || !romanceScreen) {
+    if (!canvas || !ctx || !canvasSecond || !ctxSecond || !canvasPrompt || !ctxPrompt || !canvasRomance || !ctxRomance || !firstScreen || !secondScreen || !promptScreen || !romanceScreen || !countdownDiv) {
         console.error('One or more critical DOM elements are missing.');
         return;
     }
@@ -185,6 +186,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentScene = "start";
     let gameInitialized = false;
+    let countdownInterval = null;
+
+    function startCountdown() {
+        let timeLeft = 10; // 10 seconds countdown
+        countdownDiv.classList.remove('hidden');
+        countdownDiv.textContent = `倒计时: ${timeLeft}s`;
+
+        countdownInterval = setInterval(() => {
+            timeLeft -= 1;
+            countdownDiv.textContent = `倒计时: ${timeLeft}s`;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                countdownDiv.classList.add('hidden');
+                secondScreen.classList.add('hidden');
+                promptScreen.classList.remove('hidden');
+            }
+        }, 1000);
+    }
 
     function displayScene() {
         const scene = story[currentScene];
@@ -201,20 +221,20 @@ document.addEventListener('DOMContentLoaded', () => {
         storyText.textContent = scene.text;
         choicesDiv.innerHTML = "";
         restartBtn.classList.add("hidden");
+        countdownDiv.classList.add("hidden"); // Hide countdown by default
 
         if (scene.choices.length === 0) {
-            console.log("Ending reached. Current scene:", currentScene); // Debug log
+            console.log("Ending reached. Current scene:", currentScene);
             title.textContent = scene.ending;
             if (currentScene === "romance") {
-                console.log("Romance ending detected, showing prompt screen."); // Debug log
-                secondScreen.classList.add('hidden');
-                promptScreen.classList.remove('hidden');
+                console.log("Romance ending detected, starting countdown.");
+                startCountdown(); // Start the 10-second countdown
             } else {
-                console.log("Non-romance ending, showing restart button."); // Debug log
+                console.log("Non-romance ending, showing restart button.");
                 restartBtn.classList.remove("hidden");
             }
         } else {
-            console.log("Not an ending, displaying choices for scene:", currentScene); // Debug log
+            console.log("Not an ending, displaying choices for scene:", currentScene);
             title.textContent = "月光抉择";
             scene.choices.forEach(choice => {
                 const button = document.createElement("button");
@@ -222,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.textContent = choice.text;
                 button.addEventListener("click", () => {
                     currentScene = choice.next;
-                    console.log("Choice made, transitioning to scene:", currentScene); // Debug log
+                    console.log("Choice made, transitioning to scene:", currentScene);
                     displayScene();
                 });
                 choicesDiv.appendChild(button);
@@ -232,14 +252,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initializeGame() {
         if (gameInitialized) return;
-        console.log("Initializing game, starting with scene:", currentScene); // Debug log
+        console.log("Initializing game, starting with scene:", currentScene);
         displayScene();
         gameInitialized = true;
 
         const restartBtn = document.getElementById("restart-btn");
         if (restartBtn) {
             restartBtn.addEventListener("click", () => {
-                console.log("Restart button clicked, resetting to first screen."); // Debug log
+                console.log("Restart button clicked, resetting to first screen.");
                 currentScene = "start";
                 secondScreen.classList.add('hidden');
                 firstScreen.classList.remove('hidden');
@@ -251,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Prompt screen navigation
     if (yesButton) {
         yesButton.addEventListener('click', () => {
-            console.log("Yes button clicked, transitioning to romance screen."); // Debug log
+            console.log("Yes button clicked, transitioning to romance screen.");
             promptScreen.classList.add('hidden');
             romanceScreen.classList.remove('hidden');
         });
@@ -259,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (noButton) {
         noButton.addEventListener('click', () => {
-            console.log("No button clicked, returning to first screen."); // Debug log
+            console.log("No button clicked, returning to first screen.");
             promptScreen.classList.add('hidden');
             firstScreen.classList.remove('hidden');
             currentScene = "start";
@@ -274,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // First to Second
         if (!firstScreen.classList.contains('hidden')) {
-            console.log("First screen clicked, transitioning to second screen."); // Debug log
+            console.log("First screen clicked, transitioning to second screen.");
             firstScreen.classList.add('hidden');
             secondScreen.classList.remove('hidden');
             initializeGame(); // Initialize the game when the second screen is displayed
@@ -284,7 +304,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Back button functionality (Second to First)
     if (backButton) {
         backButton.addEventListener('click', () => {
-            console.log("Back button on second screen clicked, returning to first screen."); // Debug log
+            console.log("Back button on second screen clicked, returning to first screen.");
+            if (countdownInterval) {
+                clearInterval(countdownInterval); // Stop the countdown if the user navigates back
+                countdownDiv.classList.add('hidden');
+            }
             secondScreen.classList.add('hidden');
             firstScreen.classList.remove('hidden');
             gameInitialized = false; // Reset game initialization when leaving the second screen
@@ -294,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Back button functionality (Romance to First)
     if (backButtonRomance) {
         backButtonRomance.addEventListener('click', () => {
-            console.log("Back button on romance screen clicked, returning to first screen."); // Debug log
+            console.log("Back button on romance screen clicked, returning to first screen.");
             romanceScreen.classList.add('hidden');
             firstScreen.classList.remove('hidden');
             currentScene = "start"; // Reset the game state
