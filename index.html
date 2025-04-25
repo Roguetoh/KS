@@ -35,6 +35,16 @@
             </svg>
         </button>
     </div>
+    <div id="promptScreen" class="screen hidden">
+        <canvas id="starsPrompt"></canvas>
+        <div class="content">
+            <h1><span class="no-wrap">你解锁了秘密彩蛋，是否继续？</span></h1>
+            <div class="mt-6 space-y-4">
+                <button id="yesButton" class="choice-btn w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700">是</button>
+                <button id="noButton" class="choice-btn w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700">否</button>
+            </div>
+        </div>
+    </div>
     <div id="romanceScreen" class="screen hidden">
         <canvas id="starsRomance"></canvas>
         <div class="content">

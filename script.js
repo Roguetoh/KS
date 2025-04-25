@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas ? canvas.getContext('2d') : null;
     const canvasSecond = document.getElementById('starsSecond');
     const ctxSecond = canvasSecond ? canvasSecond.getContext('2d') : null;
+    const canvasPrompt = document.getElementById('starsPrompt');
+    const ctxPrompt = canvasPrompt ? canvasPrompt.getContext('2d') : null;
     const canvasRomance = document.getElementById('starsRomance');
     const ctxRomance = canvasRomance ? canvasRomance.getContext('2d') : null;
     const music = document.getElementById('backgroundMusic');
@@ -13,14 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const muteIcon = document.getElementById('muteIcon');
     const firstScreen = document.getElementById('firstScreen');
     const secondScreen = document.getElementById('secondScreen');
+    const promptScreen = document.getElementById('promptScreen');
     const romanceScreen = document.getElementById('romanceScreen');
     const backButton = document.getElementById('backButton');
     const backButtonRomance = document.getElementById('backButtonRomance');
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
     const clickPrompt = document.getElementById('clickPrompt');
     const clickPromptSecond = document.getElementById('clickPromptSecond');
 
     // Check if critical elements exist
-    if (!canvas || !ctx || !canvasSecond || !ctxSecond || !canvasRomance || !ctxRomance || !firstScreen || !secondScreen || !romanceScreen) {
+    if (!canvas || !ctx || !canvasSecond || !ctxSecond || !canvasPrompt || !ctxPrompt || !canvasRomance || !ctxRomance || !firstScreen || !secondScreen || !promptScreen || !romanceScreen) {
         console.error('One or more critical DOM elements are missing.');
         return;
     }
@@ -31,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.height = window.innerHeight;
         canvasSecond.width = window.innerWidth;
         canvasSecond.height = window.innerHeight;
+        canvasPrompt.width = window.innerWidth;
+        canvasPrompt.height = window.innerHeight;
         canvasRomance.width = window.innerWidth;
         canvasRomance.height = window.innerHeight;
     }
@@ -69,21 +76,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create stars for canvases
     const stars = [];
     const starsSecond = [];
+    const starsPrompt = [];
     const starsRomance = [];
     for (let i = 0; i < 100; i++) {
         stars.push(new Star(canvas));
         starsSecond.push(new Star(canvasSecond));
+        starsPrompt.push(new Star(canvasPrompt));
         starsRomance.push(new Star(canvasRomance));
     }
 
     // Animation loop for canvases
     function animate() {
-        if (ctx && ctxSecond && ctxRomance) {
+        if (ctx && ctxSecond && ctxPrompt && ctxRomance) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctxSecond.clearRect(0, 0, canvasSecond.width, canvasSecond.height);
+            ctxPrompt.clearRect(0, 0, canvasPrompt.width, canvasPrompt.height);
             ctxRomance.clearRect(0, 0, canvasRomance.width, canvasRomance.height);
             stars.forEach(star => star.update(ctx));
             starsSecond.forEach(star => star.update(ctxSecond));
+            starsPrompt.forEach(star => star.update(ctxPrompt));
             starsRomance.forEach(star => star.update(ctxRomance));
             requestAnimationFrame(animate);
         }
@@ -193,14 +204,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (scene.choices.length === 0) {
             title.textContent = scene.ending;
-            if (currentScene === "romance") {
-                // Transition to the romance screen
-                secondScreen.classList.add('hidden');
-                romanceScreen.classList.remove('hidden');
-            } else {
-                // For other endings, show the restart button
-                restartBtn.classList.remove("hidden");
-            }
+            // Show the prompt screen for all endings
+            secondScreen.classList.add('hidden');
+            promptScreen.classList.remove('hidden');
         } else {
             title.textContent = "月光抉择";
             scene.choices.forEach(choice => {
@@ -220,16 +226,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gameInitialized) return;
         displayScene();
         gameInitialized = true;
+    }
 
-        const restartBtn = document.getElementById("restart-btn");
-        if (restartBtn) {
-            restartBtn.addEventListener("click", () => {
-                currentScene = "start";
-                secondScreen.classList.add('hidden');
-                firstScreen.classList.remove('hidden');
-                gameInitialized = false;
-            });
-        }
+    // Prompt screen navigation
+    if (yesButton) {
+        yesButton.addEventListener('click', () => {
+            promptScreen.classList.add('hidden');
+            romanceScreen.classList.remove('hidden');
+        });
+    }
+
+    if (noButton) {
+        noButton.addEventListener('click', () => {
+            promptScreen.classList.add('hidden');
+            firstScreen.classList.remove('hidden');
+            currentScene = "start";
+            gameInitialized = false;
+        });
     }
 
     // Screen transition functionality (First to Second)
