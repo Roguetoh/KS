@@ -189,16 +189,21 @@ document.addEventListener('DOMContentLoaded', () => {
     let countdownInterval = null;
 
     function startCountdown() {
+        console.log("Starting countdown..."); // Debug log
         let timeLeft = 10; // 10 seconds countdown
         countdownDiv.classList.remove('hidden');
         countdownDiv.textContent = `倒计时: ${timeLeft}s`;
+        console.log(`Countdown initialized: ${timeLeft}s`); // Debug log
 
         countdownInterval = setInterval(() => {
             timeLeft -= 1;
+            console.log(`Countdown tick: ${timeLeft}s`); // Debug log
             countdownDiv.textContent = `倒计时: ${timeLeft}s`;
 
             if (timeLeft <= 0) {
+                console.log("Countdown finished, transitioning to prompt screen."); // Debug log
                 clearInterval(countdownInterval);
+                countdownInterval = null;
                 countdownDiv.classList.add('hidden');
                 secondScreen.classList.add('hidden');
                 promptScreen.classList.remove('hidden');
@@ -218,10 +223,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Clear any existing countdown interval to prevent multiple timers
+        if (countdownInterval) {
+            console.log("Clearing existing countdown interval."); // Debug log
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+        }
+        countdownDiv.classList.add("hidden"); // Hide countdown by default
+
         storyText.textContent = scene.text;
         choicesDiv.innerHTML = "";
         restartBtn.classList.add("hidden");
-        countdownDiv.classList.add("hidden"); // Hide countdown by default
 
         if (scene.choices.length === 0) {
             console.log("Ending reached. Current scene:", currentScene);
@@ -306,7 +318,9 @@ document.addEventListener('DOMContentLoaded', () => {
         backButton.addEventListener('click', () => {
             console.log("Back button on second screen clicked, returning to first screen.");
             if (countdownInterval) {
-                clearInterval(countdownInterval); // Stop the countdown if the user navigates back
+                console.log("Clearing countdown interval due to back button press.");
+                clearInterval(countdownInterval);
+                countdownInterval = null;
                 countdownDiv.classList.add('hidden');
             }
             secondScreen.classList.add('hidden');
