@@ -2,17 +2,13 @@ const canvas = document.getElementById('stars');
 const ctx = canvas.getContext('2d');
 const canvasSecond = document.getElementById('starsSecond');
 const ctxSecond = canvasSecond.getContext('2d');
-const canvasThird = document.getElementById('starsThird');
-const ctxThird = canvasThird.getContext('2d');
 const music = document.getElementById('backgroundMusic');
 const musicToggle = document.getElementById('musicToggle');
 const speakerIcon = document.getElementById('speakerIcon');
 const muteIcon = document.getElementById('muteIcon');
 const firstScreen = document.getElementById('firstScreen');
 const secondScreen = document.getElementById('secondScreen');
-const thirdScreen = document.getElementById('thirdScreen');
 const backButton = document.getElementById('backButton');
-const backButtonThird = document.getElementById('backButtonThird');
 const clickPrompt = document.getElementById('clickPrompt');
 const clickPromptSecond = document.getElementById('clickPromptSecond');
 
@@ -22,8 +18,6 @@ function resizeCanvas() {
     canvas.height = window.innerHeight;
     canvasSecond.width = window.innerWidth;
     canvasSecond.height = window.innerHeight;
-    canvasThird.width = window.innerWidth;
-    canvasThird.height = window.innerHeight;
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
@@ -57,24 +51,20 @@ class Star {
     }
 }
 
-// Create stars for all canvases
+// Create stars for canvases
 const stars = [];
 const starsSecond = [];
-const starsThird = [];
 for (let i = 0; i < 100; i++) {
     stars.push(new Star(canvas));
     starsSecond.push(new Star(canvasSecond));
-    starsThird.push(new Star(canvasThird));
 }
 
-// Animation loop for all canvases
+// Animation loop for canvases
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctxSecond.clearRect(0, 0, canvasSecond.width, canvasSecond.height);
-    ctxThird.clearRect(0, 0, canvasThird.width, canvasThird.height);
     stars.forEach(star => star.update(ctx));
     starsSecond.forEach(star => star.update(ctxSecond));
-    starsThird.forEach(star => star.update(ctxThird));
     requestAnimationFrame(animate);
 }
 
@@ -203,21 +193,16 @@ function initializeGame() {
     }
 }
 
-// Screen transition functionality (First to Second, Second to Third)
+// Screen transition functionality (First to Second only)
 document.addEventListener('click', (event) => {
     // Prevent clicks on buttons from triggering the transition
-    if (event.target.closest('#backButton') || event.target.closest('#backButtonThird') || event.target.closest('#musicToggle') || event.target.closest('#game-container')) return;
+    if (event.target.closest('#backButton') || event.target.closest('#musicToggle') || event.target.closest('#game-container')) return;
     
     // First to Second
     if (!firstScreen.classList.contains('hidden')) {
         firstScreen.classList.add('hidden');
         secondScreen.classList.remove('hidden');
         initializeGame(); // Initialize the game when the second screen is displayed
-    }
-    // Second to Third
-    else if (!secondScreen.classList.contains('hidden')) {
-        secondScreen.classList.add('hidden');
-        thirdScreen.classList.remove('hidden');
     }
 });
 
@@ -226,11 +211,4 @@ backButton.addEventListener('click', () => {
     secondScreen.classList.add('hidden');
     firstScreen.classList.remove('hidden');
     gameInitialized = false; // Reset game initialization when leaving the second screen
-});
-
-// Back button functionality (Third to Second)
-backButtonThird.addEventListener('click', () => {
-    thirdScreen.classList.add('hidden');
-    secondScreen.classList.remove('hidden');
-    initializeGame(); // Re-initialize the game when returning to the second screen
 });
