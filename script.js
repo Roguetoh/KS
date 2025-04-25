@@ -204,9 +204,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (scene.choices.length === 0) {
             title.textContent = scene.ending;
-            // Show the prompt screen for all endings
-            secondScreen.classList.add('hidden');
-            promptScreen.classList.remove('hidden');
+            if (currentScene === "romance") {
+                // Show the prompt screen only for the romance ending
+                secondScreen.classList.add('hidden');
+                promptScreen.classList.remove('hidden');
+            } else {
+                // For other endings, show the restart button
+                restartBtn.classList.remove("hidden");
+            }
         } else {
             title.textContent = "月光抉择";
             scene.choices.forEach(choice => {
@@ -226,6 +231,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gameInitialized) return;
         displayScene();
         gameInitialized = true;
+
+        const restartBtn = document.getElementById("restart-btn");
+        if (restartBtn) {
+            restartBtn.addEventListener("click", () => {
+                currentScene = "start";
+                secondScreen.classList.add('hidden');
+                firstScreen.classList.remove('hidden');
+                gameInitialized = false;
+            });
+        }
     }
 
     // Prompt screen navigation
