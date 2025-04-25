@@ -51,7 +51,7 @@ class Star {
     }
 }
 
-// Create stars for canvases
+// Create stars for all canvases
 const stars = [];
 const starsSecond = [];
 for (let i = 0; i < 100; i++) {
@@ -59,7 +59,7 @@ for (let i = 0; i < 100; i++) {
     starsSecond.push(new Star(canvasSecond));
 }
 
-// Animation loop for canvases
+// Animation loop for all canvases
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctxSecond.clearRect(0, 0, canvasSecond.width, canvasSecond.height);
@@ -193,10 +193,10 @@ function initializeGame() {
     }
 }
 
-// Screen transition functionality (First to Second only)
+// Screen transition functionality (First to Second, Second to Third)
 document.addEventListener('click', (event) => {
     // Prevent clicks on buttons from triggering the transition
-    if (event.target.closest('#backButton') || event.target.closest('#musicToggle') || event.target.closest('#game-container')) return;
+    if (event.target.closest('#backButton') || event.target.closest('#backButtonThird') || event.target.closest('#musicToggle') || event.target.closest('#game-container')) return;
     
     // First to Second
     if (!firstScreen.classList.contains('hidden')) {
