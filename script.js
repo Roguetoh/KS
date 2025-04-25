@@ -203,16 +203,18 @@ document.addEventListener('DOMContentLoaded', () => {
         restartBtn.classList.add("hidden");
 
         if (scene.choices.length === 0) {
+            console.log("Ending reached. Current scene:", currentScene); // Debug log
             title.textContent = scene.ending;
             if (currentScene === "romance") {
-                // Show the prompt screen only for the romance ending
+                console.log("Romance ending detected, showing prompt screen."); // Debug log
                 secondScreen.classList.add('hidden');
                 promptScreen.classList.remove('hidden');
             } else {
-                // For other endings, show the restart button
+                console.log("Non-romance ending, showing restart button."); // Debug log
                 restartBtn.classList.remove("hidden");
             }
         } else {
+            console.log("Not an ending, displaying choices for scene:", currentScene); // Debug log
             title.textContent = "月光抉择";
             scene.choices.forEach(choice => {
                 const button = document.createElement("button");
@@ -220,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.textContent = choice.text;
                 button.addEventListener("click", () => {
                     currentScene = choice.next;
+                    console.log("Choice made, transitioning to scene:", currentScene); // Debug log
                     displayScene();
                 });
                 choicesDiv.appendChild(button);
@@ -229,12 +232,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initializeGame() {
         if (gameInitialized) return;
+        console.log("Initializing game, starting with scene:", currentScene); // Debug log
         displayScene();
         gameInitialized = true;
 
         const restartBtn = document.getElementById("restart-btn");
         if (restartBtn) {
             restartBtn.addEventListener("click", () => {
+                console.log("Restart button clicked, resetting to first screen."); // Debug log
                 currentScene = "start";
                 secondScreen.classList.add('hidden');
                 firstScreen.classList.remove('hidden');
@@ -246,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Prompt screen navigation
     if (yesButton) {
         yesButton.addEventListener('click', () => {
+            console.log("Yes button clicked, transitioning to romance screen."); // Debug log
             promptScreen.classList.add('hidden');
             romanceScreen.classList.remove('hidden');
         });
@@ -253,6 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (noButton) {
         noButton.addEventListener('click', () => {
+            console.log("No button clicked, returning to first screen."); // Debug log
             promptScreen.classList.add('hidden');
             firstScreen.classList.remove('hidden');
             currentScene = "start";
@@ -267,6 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // First to Second
         if (!firstScreen.classList.contains('hidden')) {
+            console.log("First screen clicked, transitioning to second screen."); // Debug log
             firstScreen.classList.add('hidden');
             secondScreen.classList.remove('hidden');
             initializeGame(); // Initialize the game when the second screen is displayed
@@ -276,6 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Back button functionality (Second to First)
     if (backButton) {
         backButton.addEventListener('click', () => {
+            console.log("Back button on second screen clicked, returning to first screen."); // Debug log
             secondScreen.classList.add('hidden');
             firstScreen.classList.remove('hidden');
             gameInitialized = false; // Reset game initialization when leaving the second screen
@@ -285,6 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Back button functionality (Romance to First)
     if (backButtonRomance) {
         backButtonRomance.addEventListener('click', () => {
+            console.log("Back button on romance screen clicked, returning to first screen."); // Debug log
             romanceScreen.classList.add('hidden');
             firstScreen.classList.remove('hidden');
             currentScene = "start"; // Reset the game state
