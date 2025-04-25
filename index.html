@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Load Noto Sans SC for better Chinese character rendering -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Load Tailwind CSS for the game -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <div id="firstScreen" class="screen">
@@ -20,11 +22,13 @@
     </div>
     <div id="secondScreen" class="screen hidden">
         <canvas id="starsSecond"></canvas>
-        <div class="content">
-            <h1><span class="no-wrap">快来开启你的星空之旅吧!</span></h1>
-            <p>Let's begin your starry journey!</p>
+        <div id="game-container" class="bg-gradient-to-b from-pink-300 to-pink-500 rounded-lg shadow-lg p-6">
+            <h1 id="title" class="text-2xl font-bold text-center text-pink-100">月光抉择</h1>
+            <p id="story-text" class="text-lg mt-4 text-white"></p>
+            <div id="choices" class="mt-6 space-y-4"></div>
+            <button id="restart-btn" class="hidden w-full bg-pink-600 text-white py-2 rounded-lg mt-4 hover:bg-pink-700">重新开始</button>
         </div>
-        <div id="clickPromptSecond" class="click-prompt">Click anywhere to continue</div>
+        <div id="clickPromptSecond" class="click-prompt hidden">Click anywhere to continue</div>
         <button id="backButton" class="back-button">
             <svg class="back-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 18L9 12L15 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
